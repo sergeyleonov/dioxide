@@ -48,11 +48,13 @@ class MainFragment : Fragment() {
 
         viewModel.usbOperationError.observe(this, Observer {
             when (it) {
-                is Error.NoDeviceFoundError -> showMessage(getString(R.string.error_no_device_found))
                 is Error.UsbConnectionError -> showMessage(getString(R.string.error_connection))
                 is Error.ClaimInterfaceError -> showMessage(getString(R.string.error_claim_interface))
                 is Error.InitDeviceError -> showMessage(getString(R.string.error_init_device))
+                is Error.NoDeviceFoundError -> showMessage(getString(R.string.error_no_device_found))
                 is Error.ReadReportError -> showMessage(getString(R.string.error_read_report))
+                is Error.CrcError -> showMessage(getString(R.string.error_crc))
+                is Error.FormatError -> showMessage(getString(R.string.error_format))
                 /* handle other errors */
             }
             connectButton.text = getString(R.string.connect_hint)

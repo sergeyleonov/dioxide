@@ -9,5 +9,4 @@ sealed class Error {
     object ReadReportError : Error()
     object CrcError : Error()
     object FormatError : Error()
-    object NonValueError : Error()
 }

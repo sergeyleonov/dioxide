@@ -45,14 +45,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun handleInitialize(success: Empty) {
-        setObserver()
+        setDioxideObserver()
         usbOperationSuccess.postValue(success)
     }
 
     private fun handleValue(value: Value) {
         if (value.temperature != 0.0 && temperature != value.temperature) {
             temperature = value.temperature
-            temperatureText.postValue("%.2f °C".format(value.temperature))
+            temperatureText.postValue("%.1f °C".format(value.temperature))
         }
         if (value.carbonDioxidePpm != 0 && carbonDioxidePpm != value.carbonDioxidePpm) {
             carbonDioxidePpm = value.carbonDioxidePpm
@@ -60,7 +60,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun setObserver() {
+    private fun setDioxideObserver() {
         disposable.add(
             customDevice.receive()
                 .delay(500, TimeUnit.MILLISECONDS)

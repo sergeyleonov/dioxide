@@ -16,4 +16,7 @@
     <string name="error_claim_interface">Interface not available</string>
     <string name="error_init_device">Error initializing device</string>
     <string name="error_read_report">Report reading error</string>
+    <string name="error_crc">CRC error</string>
+    <string name="error_format">Report format error</string>
+    <string name="error_read_battery">Battery reading error</string>
 </resources>
