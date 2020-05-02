@@ -21,16 +21,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var temperature: Double = 0.0
     private var carbonDioxidePpm: Int = 0
 
-    val textView = MutableLiveData<String>()
     val dioxideText = MutableLiveData<String>()
     val temperatureText = MutableLiveData<String>()
     val usbOperationError = MutableLiveData<Error>()
-    val usbOperationSuccess = MutableLiveData<Empty>()
+    val connectionLiveData = MutableLiveData<Empty>()
+    val disconnectionLiveData = MutableLiveData<Empty>()
 
     fun connectButtonPressed() {
-        if (customDevice.isConnected().isSuccess)
+        if (customDevice.isConnected().isSuccess) {
             customDevice.disconnect()
-        else {
+            handleDisconnect()
+        } else {
             customDevice.connect().handle(::handleError, ::handleConnect)
             customDevice.initialize().handle(::handleError, ::handleInitialize)
         }
@@ -41,12 +42,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun handleConnect(success: Empty) {
-        usbOperationSuccess.postValue(success)
+    }
+
+    private fun handleDisconnect() {
+        removeDioxideObserver()
+        disconnectionLiveData.postValue(Empty())
     }
 
     private fun handleInitialize(success: Empty) {
         setDioxideObserver()
-        usbOperationSuccess.postValue(success)
+        connectionLiveData.postValue(success)
     }
 
     private fun handleValue(value: Value) {
@@ -72,6 +77,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     usbOperationError.postValue(Error.ReadReportError)
                 })
         )
+    }
+
+    private fun removeDioxideObserver() {
+        disposable.clear()
     }
 
     override fun onCleared() {

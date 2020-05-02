@@ -4,11 +4,11 @@
     <string name="connect_hint">Connect</string>
     <string name="disconnect_hint">Disconnect</string>
 
-    <string name="data_hint">Connect to see data</string>
     <string name="dioxide_default">0000 ppm</string>
     <string name="temperature_default">00.0 °C</string>
 
-    <string name="connection_state_success">Connection successful</string>
+    <string name="connection_state_success">Connected successfully</string>
+    <string name="disconnection_success">Disconnected successfully</string>
     <string name="connection_state_failure">Connection error</string>
 
     <string name="error_no_device_found">No device found</string>
